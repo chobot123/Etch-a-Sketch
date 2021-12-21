@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.container {
+    display: grid;
+    width: 600px;
+    height: 600px;
+}
+
+.cell {
+  border: 1px solid #ddd;
+  text-align: center;
+}
