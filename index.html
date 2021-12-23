@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>Etch-a-Sketch</title>
 </head>
 <body>
-    <div class="container"></div>
-    <button class="clear-board">Clear</div></button>
-    <button class="eraser">Eraser</button>
-    <button class="black">Black</button>
+    <h1>Etch-a-Sketch</h1>
+    <div class = "grid-container">
+        <div class = "button-container">
+            <button class="clear-board">Clear</button>
+            <button class="eraser">Eraser</button>
+            <button class="black">Black</button>
+            <button class="color">Color</button>
+            <button class="increment">Incrementally Darker</button>
+        </div>
+        <div class="container-wrapper">
+            <div class="container"></div>
+        </div>
+    </div>
     <div class="gridSlider">
         <input type="range" min="1" max="64" value ="16" class="slider" id="myRange">
         <p>Grid Size: <span id="size">16 x 16</span></p>

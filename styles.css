@@ -3,20 +3,67 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: orange;
 } 
 
 .container {
     display: grid;
-    width: 400px;
-    height: 400px;
+    min-width: 400px;
+    min-height: 400px;
+    margin: 30px;
+
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: space-between;
+    gap: 10px;
+    padding: 10px;
+    background-color: purple;
+    min-height: 400px;
 }
 
 .cell {
-  border: 1px solid #ddd;
   text-align: center;
-
+  background-color: white;
+  filter: brightness(100%);
 }
 
-.shade {
-    background-color: black;
+.grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 56px;
+}
+
+.container-wrapper {
+    background-color: blue;
+    width: 420px;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    border-radius: 12px;
+}
+
+button {
+    background-color: green;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid cyan;
+    font-size: 16px;
+}
+
+button:hover {background-color: #005303}
+
+button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
