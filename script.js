@@ -7,12 +7,12 @@
 
 //Global variables to reference HTML elements
 const container = document.querySelector(`.container`);
-const buttonContainer = document.querySelectorAll(`button`);
 const clearButton = document.querySelector(".clear-board");
 const eraserButton = document.querySelector(".eraser");
 const blackButton = document.querySelector(".black");
 const colorButton = document.querySelector(".color");
-const incremButton = document.querySelector(".increment")
+const incremButton = document.querySelector(".increment");
+const buttonContainer = document.querySelectorAll(`button`);
 const slider = document.getElementById("myRange");
 const size = document.getElementById("size");
 
@@ -23,11 +23,34 @@ slider.oninput = function () {
 }
 let gridSize = slider.value;
 
-//Helper functions for each button when pressed; calls upon specific drawing/erasing effect
-let eraser = () => {draw("white");}
-let blackPrint = () => {draw();}
-let colorPrint = () => {draw("color");}
-let incremPrint = () => {draw("increm");}
+//Helper functions for each button when pressed; calls upon specific drawing/erasing effect and 'selects' each button (see below)
+let eraser = (e) => {
+    draw("white");
+    triggerButton(e);
+}
+let blackPrint = (e) => {
+    draw();
+    triggerButton(e);
+}
+let colorPrint = (e) => {
+    draw("color");
+    triggerButton(e);
+}
+let incremPrint = (e) => {
+    draw("increm");
+    triggerButton(e);
+}
+
+//Button 'selected' effect
+let triggerButton = (e) => {
+    let currentButton = e.target;
+    for(let i=0; i<buttonContainer.length;i++){
+        if(buttonContainer[i] !== currentButton){
+            buttonContainer[i].classList.remove(`active`);
+        }
+        else buttonContainer[i].classList.add(`active`);
+    }
+}
 
 /* Effect for each Button:
         1) colorEffect => Adds a random color to cursor
@@ -35,46 +58,76 @@ let incremPrint = () => {draw("increm");}
         3) whitenEffect => Adds white color to cursor (essentially 'erases' other colors)
         4) incremEffect => Adds shade of black that gets 10% darker each cell
 */
+
 let colorEffect = (e) => {
-    e.target.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)} , ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
-    e.target.style.filter=`brightness(100%)`;
+    e.preventDefault();
+    container.addEventListener("mouseover", colorEffect);
+    if(e.target.className === "cell"){
+        e.target.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)} , ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+        e.target.style.filter=`brightness(100%)`;
+   }
 }
-let shadeEffect = (e) => {e.target.style.backgroundColor = "black";}
+let shadeEffect = (e) => {
+    e.preventDefault();
+    container.addEventListener("mouseover", shadeEffect);
+    if(e.target.className === "cell"){
+        e.target.style.filter=`brightness(0%)`;
+   }
+}
 let whitenEffect = (e) => {
-    e.target.style.backgroundColor = "white";
-    e.target.style.filter=`brightness(100%)`;
+    e.preventDefault();
+    container.addEventListener("mouseover", whitenEffect);
+    if(e.target.className === "cell"){
+        e.target.style.backgroundColor = "white";
+        e.target.style.filter=`brightness(100%)`;
+   }
 }
 let incremEffect = (e) => {
-        let brightness = "";    
-        let string = e.target.style.filter;
+    e.preventDefault();
+    container.addEventListener("mouseover", incremEffect);
+    let brightness = "";    
+    let string = e.target.style.filter;
         //get brightness level as string
-        for(let i=0;i<string.length;i++){
-            if(!isNaN(string[i])){
-                brightness+=string[i];
-            }
+    for(let i=0;i<string.length;i++){
+        if(!isNaN(string[i])){
+            brightness+=string[i];
         }
-        //decrease brightness level by 10%
+    }
+
+    if(e.target.className === "cell"){
         e.target.style.filter=`brightness(${brightness - 10}%)`;
+    }
+}
+
+//remove all effects (for mouse up)
+let removeEffect = () => {
+    container.removeEventListener("mouseover", shadeEffect);
+    container.removeEventListener("mouseover", whitenEffect);
+    container.removeEventListener("mouseover", incremEffect);
+    container.removeEventListener("mouseover", colorEffect);
 }
 
 //Depending on (above), terminates any other effect and uses current effect
 let draw = (shade = "default") => {
-    container.removeEventListener("mouseover", incremEffect);
-    container.removeEventListener("mouseover", colorEffect);
-    container.removeEventListener("mouseover", whitenEffect);
-    container.removeEventListener("mouseover", shadeEffect);
+    container.removeEventListener("mousedown", incremEffect);
+    container.removeEventListener("mousedown", colorEffect);
+    container.removeEventListener("mousedown", whitenEffect);
+    container.removeEventListener("mousedown", shadeEffect);
     if(shade === "default"){
-        clear();
-        container.addEventListener("mouseover", shadeEffect);
+        container.addEventListener("mousedown", shadeEffect);
+        container.addEventListener("mouseup", removeEffect);
     }
     else if(shade === "white") {
-        container.addEventListener("mouseover", whitenEffect);
+        container.addEventListener("mousedown", whitenEffect);
+        container.addEventListener("mouseup", removeEffect);
     }
     else if(shade === "color"){
-        container.addEventListener("mouseover", colorEffect);
+        container.addEventListener("mousedown", colorEffect);
+        container.addEventListener("mouseup", removeEffect);
     }
     else if(shade === "increm"){
-        container.addEventListener("mouseover", incremEffect);
+        container.addEventListener("mousedown", incremEffect);
+        container.addEventListener("mouseup", removeEffect);
     }
 }
 
@@ -86,6 +139,12 @@ let grid = (gridParam) => {
         let cell = document.createElement("div");
         container.appendChild(cell).className = "cell";
     }
+    /*
+    let children = container.children;
+    for(let j=0;j<children.length;j++){
+        children[j].style.filter = `brightness(100%)`;
+    }*/
+    clear();
 }
 
 //clears all effects from board

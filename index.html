@@ -7,6 +7,9 @@
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
     <title>Etch-a-Sketch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shizuru&display=swap" rel="stylesheet"> 
 </head>
 <body>
     <h1>Etch-a-Sketch</h1>
@@ -16,13 +19,13 @@
             <button class="eraser">Eraser</button>
             <button class="black">Black</button>
             <button class="color">Color</button>
-            <button class="increment">Incrementally Darker</button>
+            <button class="increment">Incrementally Darken</button>
         </div>
         <div class="container-wrapper">
             <div class="container"></div>
         </div>
     </div>
-    <div class="gridSlider">
+    <div class="grid-slider">
         <input type="range" min="1" max="64" value ="16" class="slider" id="myRange">
         <p>Grid Size: <span id="size">16 x 16</span></p>
     </div>
