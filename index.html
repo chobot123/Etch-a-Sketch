@@ -15,11 +15,13 @@
     <h1>Etch-a-Sketch</h1>
     <div class = "grid-container">
         <div class = "button-container">
-            <button class="clear-board">Clear</button>
+            <button class="clear">Clear</button>
             <button class="eraser">Eraser</button>
             <button class="black">Black</button>
-            <button class="color">Color</button>
+            <input type="color" value="#000000" id="color-select"> 
+            <button class="color">color</button>
             <button class="increment">Incrementally Darken</button>
+            <button class="hide-border">Hide Border</button>
         </div>
         <div class="container-wrapper">
             <div class="container"></div>
@@ -27,7 +29,7 @@
     </div>
     <div class="grid-slider">
         <input type="range" min="1" max="64" value ="16" class="slider" id="myRange">
-        <p>Grid Size: <span id="size">16 x 16</span></p>
+        <p>Grid Size: <span id="size-slider">16 x 16</span></p>
     </div>
 </body>
 </html>

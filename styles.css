@@ -27,7 +27,12 @@ body {
 
 .cell {
   background-color: white;
-  filter: brightness(100%);
+  border: 1px solid black;
+  user-select: none;
+}
+
+.hide {
+    border-color: transparent;
 }
 
 .grid-container {
@@ -65,10 +70,9 @@ button {
 
 button:hover {
     box-shadow: 0px 0px 10px white;
-    
 }
 
-.clear-board:active,
+.clear:active,
 .active {
   box-shadow: 0px 0px 20px white;
   background-color: darkgreen;
