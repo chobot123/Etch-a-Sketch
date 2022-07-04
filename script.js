@@ -12,16 +12,17 @@ const slider = document.getElementById("myRange");
 const size = document.getElementById("size-slider");
 const cells =  document.getElementsByClassName("cell");
 
-let color = "black";
-let mode = "black";
+let color = "red";
+let mode = "color";
 let gridSize = 16;
 let pointerActive = false;
-let activeElement = blackButton;
+let activeElement = colorButton;
 activeElement.classList.toggle("active");
 
 //setters
 const setColor = (e) => {
     color = e.target.value;
+    colorButton.style.backgroundColor = `${color} !important`;
 };
 
 const setMode = (e) => {
@@ -53,8 +54,6 @@ const createGrid = (gridParam) => {
     }
 
 }
-
-//
 
 const updateGrid = (e) => {
     gridSize = e.target.value;
@@ -104,39 +103,24 @@ const drawColor = (e) => {
     }
 }
 
-const hideBorder = () => {
+const hideBorder = (e) => {
     for(let i = 0; i < cells.length; i++){
         cells.item(i).classList.toggle("hide");
     }
+    e.target.classList.toggle("active");
+
 }
 
-/**
- *  ACTIVE
- */
 
 createGrid(gridSize);
 
-/**
- * EVENT LISTENERS
- */
-
-//To account for if user holds down mouse outside of grid
-document.body.addEventListener("mousedown", () => {
-    pointerActive = true;
-});
-
-//Disable draw if mouse up
-document.body.addEventListener("mouseup", () => {
-    pointerActive = false;
-});
-
-//select mode
+document.body.addEventListener("mousedown", () => { pointerActive = true; });
+document.body.addEventListener("mouseup", () => { pointerActive = false; });
 blackButton.addEventListener("click", setMode);
 colorButton.addEventListener("click", setMode);
 eraserButton.addEventListener("click", setMode);
 incremButton.addEventListener("click", setMode);
 hideButton.addEventListener("click", hideBorder);
 clearButton.addEventListener("click", refreshGrid);
-
 colorSelector.addEventListener("input", setColor);
 slider.addEventListener("input", updateGrid)
